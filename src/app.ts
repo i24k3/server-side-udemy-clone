@@ -17,7 +17,7 @@ const server = http.createServer(function reqHandler(req, res) {
     const bodyObj = new URLSearchParams(body);
 
     if (req.url === "/course" && req.method === "GET") {
-      res.end(`<form action="/course" method="POST">
+      res.end(`<form action="/course/all" method="POST">
         <input type='text' name="course_name" placeholder='Enter course name...'/>
         <input type='number' name="course_price" placeholder='Enter course price...'/>
         <input type='text' name="course_description" placeholder='Enter course description...'/>
@@ -35,7 +35,12 @@ const server = http.createServer(function reqHandler(req, res) {
         coursePrice: parseInt(course_price),
         courseDescription: course_description,
       });
-      res.end("okey");
+      res.end(`
+          <p style ="background-color: lightseagreen; color: red; font-family: monospace">Course Name: ${course_name}</p>
+          <p>Course price: ${course_price}</p>
+          <p>Course description: ${course_description}</p>
+          <a href="/course">Create another course</a>
+        `);
     }
 
     if (req.url === "/teacher" && req.method === "GET") {
@@ -56,7 +61,8 @@ const server = http.createServer(function reqHandler(req, res) {
         instructorEmail: teacher_email,
         instructorDescription: teacher_description,
       });
-      res.end("okey");
+
+      res.end("teacher end hit");
     }
 
     if (req.url === "/subject" && req.method === "GET") {
@@ -74,12 +80,17 @@ const server = http.createServer(function reqHandler(req, res) {
         subName: subject_name,
         subDescription: subject_description,
       });
-      res.end("okey");
+
+      res.end("subject end hit");
     }
 
+    // // ----------------------------getting all the courses------------------------------------
+    // if (req.url === "/course/all" && req.method === "GET") {
 
+    // }
   });
 });
+
 server.listen(PORT, () => {
   console.log("running server on port: " + PORT);
 });
